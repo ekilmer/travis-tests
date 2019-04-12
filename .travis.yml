@@ -14,14 +14,14 @@ env:
   - SERVICE=service-2
   - SERVICE=service-3
 
+script: make test-${SERVICE}
+
 jobs:
   include:
     - stage: Formatting
       script: make ci-format
     - stage: Compile
       script: make
-    - stage: Test
-      script: make test-${SERVICE}
     - stage: Deploy
       script: make deploy
       if: branch = master
