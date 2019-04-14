@@ -4,7 +4,7 @@ compile:
 all: format compile test
 
 # Docker command for running with current directory mounted
-DOCKER_FMT=docker run -v $(shell pwd):/workdir -w /workdir
+DOCKER_FMT=docker run --user "$(shell id -u):$(shell id -g)" -v $(shell pwd):/workdir -w /workdir
 # Choose which files to format
 PY_FMT_FILES=$(shell find . -iname '*.py')
 C_FMT_FILES=$(shell find . -iname '*.c')
