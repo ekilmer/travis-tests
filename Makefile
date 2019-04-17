@@ -4,18 +4,18 @@ compile:
 all: format compile test
 
 # Docker command for running with current directory mounted
-DOCKER_FMT=docker run --user "$(shell id -u):$(shell id -g)" -v $(shell pwd):/workdir -w /workdir
+DOCKER_FMT=docker run --user "$(shell id -u):$(shell id -g)" -v $(shell pwd):/workdir -w /workdir unibeautify/
 # Choose which files to format
 PY_FMT_FILES=$(shell find . -iname '*.py')
 C_FMT_FILES=$(shell find . -iname '*.c')
 
 format:
-	$(DOCKER_FMT) unibeautify/black $(PY_FMT_FILES)
-	$(DOCKER_FMT) ekilmer3/clang-format -i -style=file $(C_FMT_FILES)
+	$(DOCKER_FMT)black $(PY_FMT_FILES)
+	$(DOCKER_FMT)clang-format -i -style=file $(C_FMT_FILES)
 
 ci-format:
-	$(DOCKER_FMT) unibeautify/black --check $(PY_FMT_FILES)
-	$(DOCKER_FMT) ekilmer3/clang-format -i -style=file $(C_FMT_FILES)
+	$(DOCKER_FMT)black --check $(PY_FMT_FILES)
+	$(DOCKER_FMT)clang-format -i -style=file $(C_FMT_FILES)
 	git diff --exit-code
 
 test: test-service-1 test-service-2 test-service-3
